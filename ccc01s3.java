@@ -2,11 +2,12 @@
  * Created by david on 01/12/16.
  */
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
+
+
+//SOLVED
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ccc01s3 {
@@ -19,6 +20,7 @@ public class ccc01s3 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         ArrayList<ArrayList<Integer>> nodes = new ArrayList<>();
+
         ArrayList<String> ess = new ArrayList<>();
 
         for(int i = 0; i<26; i++){
@@ -27,30 +29,40 @@ public class ccc01s3 {
 
         String buffer = br.readLine();
 
-        int roads = 0;
+        ArrayList<String> used = new ArrayList<>();
 
         while(!buffer.equals("**")){
             char[] C= buffer.toCharArray();
             nodes.get(((int)C[0])-65).add(((int)C[1])-65);
             nodes.get(((int)C[1])-65).add(((int)C[0])-65);
-            roads++;
             buffer = br.readLine();
         }
 
         for(int i = 0; i<26; i++){
-            for(int j=0; i<nodes.get(i).size(); i++){
+            for(int j=0; j<nodes.get(i).size(); j++) {
 
-                nodes.get(i).remove(j);
-                nodes.get(j).remove(i);
+                int temp = nodes.get(i).get(j);
 
-                if(dfs(nodes, 0, 1)){
-                    char a = (char)(i+39);
-                    char b = (char)(j+39);
-                    String ab = Character.toString(a)+Character.toString(b);
-                    ess.add(ab);
+                char a = (char) (i + 65);
+                char b = (char) (temp + 65);
+                String ba = Character.toString(b) + Character.toString(a);
+
+                if (!used.contains(ba)) {
+
+                    nodes.get(i).remove(j);
+                    int place = nodes.get(temp).indexOf(i);
+                    nodes.get(temp).remove((Integer) i);
+
+
+                    if (!dfs(nodes, 0, 1)) {
+                        String ab = Character.toString(a) + Character.toString(b);
+                        ess.add(ab);
+                        used.add(ab);
+                    }
+
+                    nodes.get(i).add(j, temp);
+                    nodes.get(temp).add(place, i);
                 }
-
-                nodes.get(i).add(j);
             }
         }
 
@@ -84,13 +96,12 @@ public class ccc01s3 {
         }
         for(int w : nodes.get(v)){
             if(!visited[w]){
-                return found = dfs_rec(nodes, visited, w, e);
+                found = dfs_rec(nodes, visited, w, e);
+                if(found){
+                    return found;
+                }
             }
         }
         return found;
     }
-
-
-
-
 }
