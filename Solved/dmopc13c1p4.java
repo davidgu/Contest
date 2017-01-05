@@ -1,7 +1,9 @@
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+package Solved;
+
 import java.util.*;
+
+
+//SOLVED
 
 /**
  * Created by David on 2016-12-10.
@@ -74,7 +76,7 @@ public class dmopc13c1p4 {
                     }
                 }
             }
-            if (dist > 60) {
+            if (dist >= 60) {
                 System.out.println("#notworth");
             } else {
                 System.out.println(dist);
@@ -83,12 +85,14 @@ public class dmopc13c1p4 {
     }
 }
 
-class Point{
-    int x;
-    int y;
+//Point class commented out as identical implementation exists in another solution.
 
-    Point(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
+//class Point{
+//    int x;
+//    int y;
+//
+//    Point(int x, int y){
+//        this.x = x;
+//        this.y = y;
+//    }
+//}
